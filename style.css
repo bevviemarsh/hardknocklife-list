@@ -1,0 +1,387 @@
+body {
+    background-color: #b8c9ee;
+}
+
+nav {
+    position: absolute;
+    top: 0%;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 20vh;
+    width: 100vh;
+    background-color: #252525;
+    box-shadow: 0px 5px 10px 0px #353432;
+    text-align: center;
+}
+
+h1 {
+    position: absolute;
+    top: 0%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Cinzel', serif;
+    color: #997200;
+    font-size: 30px;
+    letter-spacing: 3px;
+}
+
+i.arrow {
+    position: absolute;
+    top: 65%;
+    right: 10%;
+    transform: translateX(-50%);
+    font-size: 35px;
+    color: #997200;
+    cursor: pointer;
+    transition: .4s;
+}
+
+i.arrow.active {
+    top: 180%;
+    transform: rotate(180deg);
+}
+
+aside {
+    position: absolute;
+    top: 0%;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 12vh;
+    width: 100vh;
+    background-color: #252525;
+    z-index: -1;
+    transition: .5s;
+}
+
+aside.active {
+    top: 21%;
+    box-shadow: 0px 5px 10px 0px #353432;
+}
+
+aside>input {
+    position: absolute;
+    top: calc(50% - 3vh / 2);
+    left: calc(50% - 40% / 2);
+    height: 3vh;
+    width: 40%;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #997200;
+    font-family: 'Cinzel', serif;
+    color: #B0935E;
+    letter-spacing: 0.5px;
+}
+
+aside>input::placeholder {
+    opacity: 1;
+    color: #997200;
+    transition: 0.3s;
+}
+
+aside>input:focus::placeholder {
+    opacity: 0;
+}
+
+.color {
+    color: #66A65C;
+}
+
+aside>button {
+    position: absolute;
+    top: 39%;
+    left: 72%;
+    height: 3vh;
+    width: 5%;
+    margin: 0 auto;
+    line-height: calc(3vh / 2);
+    background-color: transparent;
+    border: none;
+    font-size: 35px;
+    font-family: 'Cinzel', serif;
+    color: #997200;
+    cursor: pointer;
+}
+
+section {
+    display: flex;
+    position: absolute;
+    top: 40%;
+    left: 0%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+
+}
+
+.main {
+    position: relative;
+    margin: 20px;
+    width: 90vh;
+    height: 50vh;
+    background-color: #252525;
+    animation: transit .5s;
+    box-shadow: 0px 5px 10px 0px #353432;
+    text-align: center;
+    overflow: hidden;
+}
+
+.mainH2 {
+    font-size: 25px;
+    font-family: 'Cinzel', serif;
+    color: #997200;
+    letter-spacing: 3px;
+}
+
+.mainInput {
+    position: absolute;
+    top: 25%;
+    left: calc(50% - 40% / 2);
+    height: 3vh;
+    width: 40%;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #997200;
+    font-family: 'Cinzel', serif;
+    color: #B0935E;
+    letter-spacing: 0.5px;
+}
+
+.mainInput::placeholder {
+    opacity: 1;
+    color: #43A047;
+    transition: 0.3s;
+}
+
+.mainInput:focus::placeholder {
+    opacity: 0;
+}
+
+.mainButton {
+    position: absolute;
+    top: 26%;
+    left: 72%;
+    height: 3vh;
+    width: 5%;
+    margin: 0 auto;
+    line-height: calc(3vh / 2);
+    background-color: transparent;
+    border: none;
+    font-size: 35px;
+    font-family: 'Cinzel', serif;
+    color: #997200;
+    cursor: pointer;
+}
+
+.mainSearch {
+    position: absolute;
+    top: 85%;
+    left: calc(50% - 40% / 2);
+    height: 3vh;
+    width: 40%;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #997200;
+    font-family: 'Cinzel', serif;
+    color: #B0935E;
+    letter-spacing: 0.5px;
+}
+
+.mainSearch::placeholder {
+    opacity: 1;
+    color: #43A047;
+    transition: 0.3s;
+}
+
+.mainSearch:focus::placeholder {
+    opacity: 0;
+}
+
+.mainUl {
+    position: absolute;
+    top: 30%;
+    left: 25%;
+    height: 150px;
+    width: 400px;
+    text-align: left;
+    overflow: auto;
+}
+
+.mainUl::-webkit-scrollbar {
+    height: 4px;
+    width: 4px;
+    background-color: transparent;
+}
+
+.mainUl::-webkit-scrollbar-thumb {
+    background: #B0935E;
+}
+
+.mainUl::-webkit-scrollbar-corner {
+    background: transparent;
+}
+
+.mainLi {
+    font-size: 18px;
+    font-family: 'Cinzel', serif;
+    color: #4A93E2;
+    letter-spacing: 1px;
+    list-style-type: none;
+    animation: transit .5s;
+    cursor: pointer;
+}
+
+.mainLiChecked {
+    color: #A7A7B4;
+    text-decoration: line-through;
+    transition: .5s;
+    cursor: pointer;
+}
+
+.mainLiButton {
+    background-color: transparent;
+    border: none;
+    color: #43A047;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
+}
+
+.mainRemoveButton {
+    position: absolute;
+    top: 5%;
+    right: 3%;
+    background-color: transparent;
+    border: none;
+    color: #43A047;
+    cursor: pointer;
+}
+
+.mainH3 {
+    position: absolute;
+    top: 0%;
+    left: 5%;
+    font-family: 'Cinzel', serif;
+    color: #4A93E2;
+}
+
+.closeDiv {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: absolute;
+    top: 20%;
+    left: calc(50% - 500px / 2);
+    height: 200px;
+    width: 500px;
+    background-color: #977F53;
+}
+
+.closeH1 {
+    height: 50%;
+    font-size: 15px;
+    text-align: center;
+    color: #353432;
+}
+
+.closeButtons {
+    width: 30%;
+    height: 20%;
+    border: none;
+    background-color: transparent;
+    font-size: 20px;
+    color: #353432;
+    font-family: 'Cinzel', serif;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.background {
+    filter: grayscale(100%);
+}
+
+@media (max-width: 425px) {
+    nav {
+        width: 100%;
+        height: 28.5vh;
+    }
+
+    h1 {
+        font-size: 25px;
+    }
+
+    i.arrow {
+        display: none;
+    }
+
+    aside.active {
+        top: 28.5%;
+        width: 100%;
+    }
+
+    aside>input {
+        left: calc(50% - 70% / 2);
+        width: 70%;
+    }
+
+    aside>button {
+        top: 37%;
+        left: 88%;
+    }
+
+    .main {
+        margin: 0px;
+    }
+
+    .mainInput {
+        left: calc(50% - 70% / 2);
+        width: 70%;
+    }
+
+    .mainButton {
+        top: 24%;
+        left: 90%;
+    }
+
+    .mainUl {
+        left: 5%;
+        height: 150px;
+        width: 400px;
+    }
+
+    .mainLi {
+        font-size: 25px;
+    }
+
+    .mainRemoveButton {
+        font-size: 17px;
+    }
+
+    .closeButtons {
+        font-size: 25px;
+    }
+
+    .mainUl::-webkit-scrollbar {
+        display: none;
+    }
+
+    .mainUl::-webkit-scrollbar-thumb {
+        display: none;
+    }
+
+    .mainUl::-webkit-scrollbar-corner {
+        display: none;
+    }
+}
+
+@keyframes transit {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
