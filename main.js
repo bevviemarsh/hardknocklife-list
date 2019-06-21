@@ -1,176 +1,225 @@
+const LI_CLASS = "mainLiButton";
 // Elements
-const arrow = document.querySelector('i');
-const aside = document.querySelector('aside');
-const inputAside = document.querySelector('aside input');
-const buttonAside = document.querySelector('aside button');
-const section = document.querySelector('section');
+const inputAside = document.querySelector("aside input");
+const section = document.querySelector("section");
+
+addMainListeners();
 
 // Main panel
-const changePosition = () => {
-    arrow.classList.toggle('active');
-    aside.classList.toggle('active');
-};
-arrow.addEventListener('click', changePosition);
+function addMainListeners() {
+  const arrow = document.querySelector("i");
+  const aside = document.querySelector("aside");
 
-inputAside.addEventListener('focus', (e) => {
-    e.target.classList.add('color');
-});
-inputAside.addEventListener('blur', (e) => {
-    e.target.classList.remove('color');
-});
+  arrow.addEventListener("click", () => {
+    arrow.classList.toggle("active");
+    aside.classList.toggle("active");
+  });
 
-let counterUl = 0;
-let counterInputSearch = 0;
-let counterButtonRemove = 0;
+  inputAside.addEventListener("focus", ({ target }) => {
+    target.classList.add("color");
+  });
+
+  inputAside.addEventListener("blur", ({ target }) => {
+    target.classList.remove("color");
+  });
+
+  const buttonAside = document.querySelector("aside button");
+  buttonAside.addEventListener("click", addNewLifePart);
+}
+
+let counter = 0;
 
 // Main div
-const addNewLifePart = (e) => {
-    e.preventDefault();
-    const inputValue = inputAside.value;
-    if (inputValue === '') return;
+function addNewLifePart() {
+  const inputValue = inputAside.value;
+  if (!inputValue) return;
 
-    // Create all necessary elements of div and section
-    const div = document.createElement('div');
-    div.classList.add('main');
-    const h2 = document.createElement('h2');
-    h2.classList.add('mainH2');
-    const input = document.createElement('input');
-    input.placeholder = "Add another hard activity";
-    input.classList.add('mainInput');
-    const button = document.createElement('button');
-    button.classList.add('mainButton');
-    button.textContent = '+';
-    const buttonRemove = document.createElement('button');
-    buttonRemove.innerHTML = '<i class="fas fa-times-circle"></i>';
-    buttonRemove.classList.add('mainRemoveButton');
-    buttonRemove.setAttribute(`data-key`, `${counterButtonRemove++}`);
-    const ul = document.createElement('ul');
-    ul.classList.add('mainUl');
-    ul.setAttribute(`data-key`, `${counterUl++}`);
-    const inputSearch = document.createElement('input');
-    inputSearch.placeholder = "You have to search?";
-    inputSearch.classList.add('mainSearch');
-    inputSearch.setAttribute(`data-key`, `${counterInputSearch++}`)
-    const h3Counter = document.createElement('h3');
-    h3Counter.classList.add('mainH3');
+  const lifePart = createLifePart(inputValue);
+  section.appendChild(lifePart);
 
-    h2.textContent = inputValue;
+  inputAside.value = "";
+}
 
-    div.appendChild(h2);
-    div.appendChild(input);
-    div.appendChild(button);
-    div.appendChild(inputSearch);
-    div.appendChild(ul);
-    div.appendChild(buttonRemove);
-    div.appendChild(h3Counter);
+// Create all necessary elements of div and section
+function createLifePart(lifePartTitle) {
+  const div = document.createElement("div");
+  div.classList.add("main");
 
-    section.appendChild(div);
+  const h2 = document.createElement("h2");
+  h2.classList.add("mainH2");
 
-    inputAside.value = '';
+  const input = document.createElement("input");
+  input.placeholder = "Add another hard activity";
+  input.classList.add("mainInput");
 
-    // ToDoList - mechanism
-    const addNewActivity = (e) => {
-        e.preventDefault();
-        const inputDivValue = input.value;
-        if (inputDivValue === '') return;
+  const button = document.createElement("button");
+  button.classList.add("mainButton");
+  button.textContent = "+";
 
-        // Create li
-        const li = document.createElement('li');
-        li.classList.add('mainLi');
-        li.innerHTML = '<button class="mainLiButton"><i class="fas fa-times"></i></button>' + '' + inputDivValue;
-        ul.appendChild(li);
+  const buttonRemove = document.createElement("button");
+  buttonRemove.innerHTML = '<i class="fas fa-times-circle"></i>';
+  buttonRemove.classList.add("mainRemoveButton");
+  buttonRemove.setAttribute(`data-key`, `${counter++}`);
 
-        // Count li
-        const index = ul.dataset.key;
-        const liElements = [...document.querySelectorAll(`ul[data-key="${index}"] li`)];
-        h3Counter.textContent = liElements.length;
+  const ul = document.createElement("ul");
+  ul.classList.add("mainUl");
+  ul.setAttribute(`data-key`, `${counter++}`);
 
-        // Render input
-        input.value = '';
+  const inputSearch = document.createElement("input");
+  inputSearch.placeholder = "You have to search?";
+  inputSearch.classList.add("mainSearch");
+  inputSearch.setAttribute(`data-key`, `${counter++}`);
 
-        // Check each li
-        const checkLi = (e) => {
-            e.preventDefault();
-            e.target.classList.toggle('mainLiChecked');
-        };
-        for (const liElement of liElements) {
-            liElement.onclick = checkLi;
-        };
+  const h3Counter = document.createElement("h3");
+  h3Counter.classList.add("mainH3");
 
-        // Search
-        const indexInputs = inputSearch.dataset.key;
-        const inputSearching = document.querySelector(`input[data-key="${indexInputs}"]`);
-        const ulElement = document.querySelector(`ul[data-key="${index}"]`);
-        const search = (e) => {
-            const text = e.target.value.toLowerCase();
-            let tasks = liElements;
-            tasks = tasks.filter(li => {
-                if (li.textContent.toLowerCase().includes(text)) {
-                    li.style.display = 'block';
-                } else {
-                    li.style.display = 'none';
-                }
-            });
-        };
-        inputSearching.addEventListener('input', search);
+  h2.textContent = lifePartTitle;
 
-        // Remove li and count again
-        const icoElements = document.querySelectorAll('li button i');
-        const removeLi = (e) => {
-            e.target.parentNode.parentNode.remove();
-            const index = ul.dataset.key;
-            const liElements = [...document.querySelectorAll(`ul[data-key="${index}"] li`)];
-            h3Counter.innerText = liElements.length;
-            if (liElements.length === 0) {
-                h3Counter.innerText = '';
-            }
-        };
-        icoElements.forEach(icoElement => icoElement.addEventListener('click', removeLi));
-    };
+  div.appendChild(h2);
+  div.appendChild(input);
+  div.appendChild(button);
+  div.appendChild(inputSearch);
+  div.appendChild(ul);
+  div.appendChild(buttonRemove);
+  div.appendChild(h3Counter);
 
-    button.addEventListener('click', addNewActivity);
+  addLifePartListeners(div, {
+    h2,
+    input,
+    button,
+    inputSearch,
+    ul,
+    buttonRemove,
+    h3Counter
+  });
 
-    // Remove main div
-    const indexButtonRemove = buttonRemove.dataset.key;
-    const iButtonsRemove = document.querySelectorAll(`button[data-key="${indexButtonRemove}"] i`);
-    const removeDiv = (e) => {
-        // Create close div
-        const closeDiv = document.createElement('div');
-        closeDiv.classList.add('closeDiv');
-        const closeH1 = document.createElement('h1');
-        closeH1.classList.add('closeH1');
-        closeH1.innerHTML = 'You really want to close this life chapter?';
-        const closeButtonYes = document.createElement('button');
-        closeButtonYes.textContent = 'Yes';
-        closeButtonYes.classList.add('closeButtons');
-        const closeButtonNo = document.createElement('button');
-        closeButtonNo.classList.add('closeButtons');
-        closeButtonNo.textContent = 'No';
-        div.appendChild(closeDiv);
-        closeDiv.appendChild(closeH1);
-        closeDiv.appendChild(closeButtonYes);
-        closeDiv.appendChild(closeButtonNo);
+  return div;
+}
 
-        // Blur and grayscale to main div
-        e.target.parentNode.parentNode.classList.add('background');
+function addLifePartListeners(div, elements) {
+  elements.button.addEventListener("click", addNewActivity(elements));
+  elements.buttonRemove.addEventListener("click", removeLifePart(div));
+}
 
-        // Close main div and close div
-        const closeAllDiv = (e) => {
-            e.target.parentNode.parentNode.remove();
-            e.target.parentNode.remove();
-        }
-        closeButtonYes.addEventListener('click', closeAllDiv);
+function addNewActivity(elements) {
+  return () => {
+    const inputDivValue = elements.input.value;
+    if (!inputDivValue) return;
 
-        // Close close div and remove class from main div
-        const closeCloseDiv = (e) => {
-            e.target.parentNode.parentNode.classList.remove('background');
-            e.target.parentNode.remove();
-        }
-        closeButtonNo.addEventListener('click', closeCloseDiv);
-    };
-    for (const iButtonRemove of iButtonsRemove) {
-        iButtonRemove.addEventListener('click', removeDiv);
-    };
-};
+    liOperations(inputDivValue, elements);
 
-buttonAside.addEventListener('click', addNewLifePart);
+    elements.input.value = "";
+  };
+}
+
+function liOperations(value, elements) {
+  // Create li
+  const li = document.createElement("li");
+  li.classList.add("mainLi");
+  li.innerHTML = `<button class=${LI_CLASS}><i class="fas fa-times"></i></button>${value}`;
+  elements.ul.appendChild(li);
+
+  // Count li
+  const index = elements.ul.dataset.key;
+  const liElements = [
+    ...document.querySelectorAll(`ul[data-key="${index}"] li`)
+  ];
+  elements.h3Counter.textContent = liElements.length;
+
+  // Check each li
+  const checkLi = e => {
+    e.target.classList.toggle("mainLiChecked");
+  };
+  for (const liElement of liElements) {
+    liElement.onclick = checkLi;
+  }
+
+  // Search
+  const indexInputs = elements.inputSearch.dataset.key;
+  const inputSearching = document.querySelector(
+    `input[data-key="${indexInputs}"]`
+  );
+
+  const search = e => {
+    const text = e.target.value.toLowerCase();
+    let tasks = liElements;
+    tasks = tasks.filter(li => {
+      if (li.textContent.toLowerCase().includes(text)) {
+        li.style.display = "block";
+      } else {
+        li.style.display = "none";
+      }
+    });
+  };
+
+  inputSearching.addEventListener("input", search);
+
+  // Remove li and count again
+  const icoElements = document.querySelectorAll("li button i");
+
+  const removeLi = e => {
+    e.target.parentNode.parentNode.remove();
+    const index = elements.ul.dataset.key;
+    const liElements = [
+      ...document.querySelectorAll(`ul[data-key="${index}"] li`)
+    ];
+    elements.h3Counter.innerText = liElements.length;
+    if (liElements.length === 0) {
+      elements.h3Counter.innerText = "";
+    }
+  };
+
+  icoElements.forEach(icoElement =>
+    icoElement.addEventListener("click", removeLi)
+  );
+}
+
+function removeLifePart(div) {
+  const confirm = createCloseDiv(div);
+
+  return () => {
+    div.classList.add("background");
+    div.appendChild(confirm);
+  };
+}
+
+function createCloseDiv(div) {
+  const closeDiv = document.createElement("div");
+  closeDiv.classList.add("closeDiv");
+
+  const closeH1 = document.createElement("h1");
+  closeH1.classList.add("closeH1");
+  closeH1.innerHTML = "You really want to close this life chapter?";
+
+  const closeButtonYes = document.createElement("button");
+  closeButtonYes.textContent = "Yes";
+  closeButtonYes.classList.add("closeButtons");
+
+  const closeButtonNo = document.createElement("button");
+  closeButtonNo.classList.add("closeButtons");
+  closeButtonNo.textContent = "No";
+
+  closeDiv.appendChild(closeH1);
+  closeDiv.appendChild(closeButtonYes);
+  closeDiv.appendChild(closeButtonNo);
+
+  addCloseDivListeners(closeDiv, div, {
+    closeButtonYes,
+    closeButtonNo
+  });
+
+  return closeDiv;
+}
+
+function addCloseDivListeners(closeDiv, div, elements) {
+  // Close main div and close div
+  elements.closeButtonYes.addEventListener("click", () => {
+    div.remove();
+  });
+
+  // Close close div and remove class from main div
+  elements.closeButtonNo.addEventListener("click", () => {
+    div.classList.remove("background");
+    closeDiv.remove();
+  });
+}
